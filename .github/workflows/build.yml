@@ -1,0 +1,53 @@
+name: build-writeups
+
+on:
+  push:
+    paths:
+      - "machines/**"
+      - "template/**"
+      - "scripts/**"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Typst
+        uses: typst-community/setup-typst@v4
+
+      - name: Guardrails + build every machine
+        run: |
+          set -e
+          shopt -s nullglob
+          fail=0
+          for dir in machines/*/; do
+            name=$(basename "$dir")
+            [ -f "$dir/notes.md" ] || continue
+            echo "::group::$name"
+            # Retirement gate + flag scan. A failure here blocks the box,
+            # but does not fail the whole run — a not-yet-retired box in the
+            # tree is a warning, not a broken build.
+            if ! python3 scripts/htb.py check "$name"; then
+              echo "::warning title=$name::skipped (failed retirement/flag check)"
+              echo "::endgroup::"
+              continue
+            fi
+            if [ -f "$dir/writeup.typ" ]; then
+              typst compile --root . "$dir/writeup.typ" "$dir/writeup.pdf" || fail=1
+            fi
+            echo "::endgroup::"
+          done
+          exit $fail
+
+      - name: Refresh README index
+        run: python3 scripts/htb.py index
+
+      - name: Commit built PDFs + index
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A '*.pdf' README.md
+          git diff --cached --quiet || git commit -m "ci: build writeups + refresh index"
+          git push || true
