@@ -1,5 +1,6 @@
 # built artifacts are committed by CI, but ignore local scratch
 *.pdf
 !machines/**/writeup.pdf
+!Prolabs/**/*.pdf
 scans/
 .DS_Store

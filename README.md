@@ -33,6 +33,17 @@ own (also wired into CI). `scripts/htb.py build <name>` checks then compiles.
 | [Example](machines/example/writeup.pdf) | Linux | Easy | 2024-06-15 |  |
 <!--/INDEX-->
 
+## Pro Labs
+
+Multi-host Active Directory engagements. HTB's content rules don't permit publishing
+Pro Lab solutions, so these are **completion certificates plus a short capability
+summary only** — not walkthroughs.
+
+| Pro Lab | Certificate | Summary |
+|---|---|---|
+| Dante | [cert](Prolabs/Dante/Dante.pdf) | [summary](Prolabs/Dante/summary.md) |
+| Mythical | [cert](Prolabs/Mythical/Mythical.pdf) | [summary](Prolabs/Mythical/summary.md) |
+
 ## Layout
 
 ```
@@ -42,4 +53,5 @@ machines/<name>/writeup.typ  # generated
 machines/<name>/writeup.pdf  # built
 template/lib.typ             # Typst template + helpers
 scripts/htb.py               # guardrails + index
+Prolabs/<lab>/<lab>.pdf       # cert + summary (no walkthroughs, per ToS)
 ```
