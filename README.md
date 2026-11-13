@@ -28,6 +28,8 @@ own (also wired into CI). `scripts/htb.py build <name>` checks then compiles.
 <!--INDEX-->
 | Machine | OS | Difficulty | Retired | Tags |
 |---|---|---|---|---|
+| [Administrator](machines/Administrator/writeup.pdf) | Windows | Medium | 2025-04-19 | ad, kerberos |
+| [Breach](machines/Breach/writeup.pdf) | Windows Server 2022 | Medium | 2025-10-09 | ad, kerberos, mssql, silver-ticket, coerce |
 | [Example](machines/example/writeup.pdf) | Linux | Easy | 2024-06-15 |  |
 <!--/INDEX-->
 
